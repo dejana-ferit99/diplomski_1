@@ -1,0 +1,26 @@
+{
+  "billDataBody": [
+    {
+     "name": "User",
+      "address": {
+          "street": "Userly",
+          "city": "Usertown",
+          "state": "Osjecko-baranjska",
+          "zipCode": "31000"
+      },
+      "phoneNumber": "0987654321",
+      "accountNumber": 12345
+    }, 
+    {
+      "name": "",
+       "address": {
+           "street": "",
+           "city": "",
+           "state": "",
+           "zipCode": ""
+       },
+       "phoneNumber": "",
+       "accountNumber": ""
+     }
+  ]
+}
