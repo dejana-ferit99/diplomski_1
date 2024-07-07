@@ -32,14 +32,15 @@ describe('Parabank Login API Test', () => {
             expect(account).to.have.property('id');
             accountID = account.id;
             console.log(accountID);
-            apiUrl2 = `https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}/transactions/onDate/5-19-2024`;
+            //If user is new user, date at the end of this url should be changed
+            apiUrl2 = `https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}/transactions/onDate/07-07-2024`;
         });
 
     });  
 
     it("Fetch transactions for specific date for account", () => {
 
-        transactionsEndpoint.transactionsByDate(apiUrl1, authToken).then((response) => {
+        transactionsEndpoint.transactionsByDate(apiUrl2, authToken).then((response) => {
             expect(response.status).to.eq(200);
             const transfer = response.body[0]; 
             expect(transfer).to.have.property('id');
@@ -51,7 +52,7 @@ describe('Parabank Login API Test', () => {
 
     });
 
-    it("Fetch transactions for specific date for account", () => {
+    it("Fetch transactions for specific date (transactions for this date does not exist) for account", () => {
 
         transactionsEndpoint.transactionsByDate(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}/transactions/onDate/3-23-2024`, authToken).then((response) => {
             expect(response.status).to.eq(200);

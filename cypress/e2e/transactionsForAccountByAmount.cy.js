@@ -38,7 +38,7 @@ describe('Parabank Login API Test', () => {
 
     it("Create transactions with valid ID account and amount", () => {
 
-        transactionsForAmountEndpoint.transactionsForAccountByAmount(apiUrl1, authToken).then((response) => {
+        transactionsForAmountEndpoint.transactionsForAccountByAmount(apiUrl2, authToken).then((response) => {
             expect(response.status).to.eq(200);
             const transactions = response.body[0]; 
             expect(transactions).to.have.property("id");
@@ -50,21 +50,21 @@ describe('Parabank Login API Test', () => {
         });
 
     });
-    it("Create transactions with valid ID account and  wihout amount", () => {
+    it("Create transactions with valid ID account and without amount", () => {
 
         transactionsForAmountEndpoint.transactionsForAccountByAmount(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}/transactions/amount/`, authToken).then((response) => {
             expect(response.status).to.eq(404);
         });
 
     });
-    it("Create transactions with valid ID account and  wihout amount", () => {
+    it("Create transactions with invalid ID account and without amount", () => {
 
         transactionsForAmountEndpoint.transactionsForAccountByAmount(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/14/transactions/amount/`, authToken).then((response) => {
             expect(response.status).to.eq(404);
         });
 
     });
-    it("Create transactions with invalid ID account and  with amount", () => {
+    it("Create transactions with invalid ID account and with amount", () => {
 
         transactionsForAmountEndpoint.transactionsForAccountByAmount(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/14/transactions/amount/500`, authToken).then((response) => {
             expect(response.status).to.eq(500);

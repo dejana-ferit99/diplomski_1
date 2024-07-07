@@ -52,7 +52,7 @@ describe('Parabank Login API Test', () => {
 
     });
 
-    it("Transfer money from one account to another, fromAccount is invalid", () => {
+    it("Transfer money from one account to another when fromAccountId is invalid, toAccountId is valid, with amount", () => {
 
         transferEndpoint.transferFunds(`https://parabank.parasoft.com/parabank/services_proxy/bank/transfer?fromAccountId=15&toAccountId=${accountID}&amount=500`, authToken).then((response) => {
             expect(response.status).to.eq(500);
@@ -92,7 +92,7 @@ describe('Parabank Login API Test', () => {
 
     });
 
-    it("Transfer money from one account to another when fromAccountId is invalid, toAccountId is valid, without amount", () => {
+    it("Transfer money from one account to another when fromAccountId is valid, toAccountId is invalid, without amount", () => {
 
         transferEndpoint.transferFunds(`https://parabank.parasoft.com/parabank/services_proxy/bank/transfer?fromAccountId=${accountID}&toAccountId=15&amount=`, authToken).then((response) => {
             expect(response.status).to.eq(400);

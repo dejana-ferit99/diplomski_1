@@ -1,7 +1,7 @@
 {
   "devDependencies": {
-    "@cypress/grep": "^4.0.1",
-    "cypress": "^13.9.0"
+    "@cypress/grep": "^4.1.0",
+    "cypress": "^13.13.0"
   },
   "dependencies": {
     "xml-js": "^1.6.11"

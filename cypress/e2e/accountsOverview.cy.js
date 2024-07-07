@@ -52,7 +52,7 @@ describe('Parabank Login API Test', () => {
 
     });
 
-    it("Get all bank accounts of the user by invalid user Id", () => {
+    it("Get all bank accounts without user Id", () => {
 
         accountsEndpoint.accountsOverview('https://parabank.parasoft.com/parabank/services_proxy/bank/customers/accounts', authToken).then((response) => {
             expect(response.status).to.eq(400);

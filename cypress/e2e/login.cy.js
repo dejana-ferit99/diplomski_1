@@ -44,7 +44,7 @@ describe('Parabank Login API Test', () => {
     });
   });
 
-  it('Should fail login with incorrect credentials', () => {
+  it('Should fail login with incorrect credentials (incorrect password and username)', () => {
     apiEndpoints.login('user1', '123456').then((response) => {
       expect(response.status).to.eq(400);
       const responseBody = response.body;

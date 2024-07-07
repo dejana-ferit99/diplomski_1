@@ -31,9 +31,9 @@ describe('Parabank Login API Test', () => {
             const account = response.body[0]; 
             expect(account).to.have.property('id');
             accountID = account.id;
-            console.log(accountID);
+            //console.log(accountID);
             apiUrl2 = `https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}`;
-            console.log(apiUrl2);
+            //console.log(apiUrl2);
           });
     });
 

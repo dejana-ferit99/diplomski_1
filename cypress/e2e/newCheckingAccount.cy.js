@@ -24,7 +24,7 @@ describe('Parabank Login API Test', () => {
 
     });
 
-    it("Get all bank accounts of the user by valid user ID", () => {
+    it("Get all checking bank accounts of the user by valid user ID", () => {
 
         accountsEndpoint.accountsOverview(apiUrl1, authToken).then((response) => {
             expect(response.status).to.eq(200);

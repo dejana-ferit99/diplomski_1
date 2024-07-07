@@ -50,7 +50,7 @@ describe('Parabank Login API Test', () => {
     it("Pay bill with valid accountId and amount without body data", () => {
 
         cy.fixture('billDataBody').then((data) => {
-            billEndpoint.payBill(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=`, authToken, data.billDataBody[1]).then((response) => {
+            billEndpoint.payBill(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=200`, authToken, data.billDataBody[1]).then((response) => {
                 expect(response.status).to.eq(400);
             });
         });
@@ -67,7 +67,7 @@ describe('Parabank Login API Test', () => {
 
     });
 
-    it("Pay bill with invalid accountId and amount using valid body data", () => {
+    it("Pay bill with invalid accountId and without amount using valid body data", () => {
 
         cy.fixture('billDataBody').then((data) => {
             billEndpoint.payBill(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=15&amount=`, authToken, data.billDataBody[0]).then((response) => {
