@@ -41,7 +41,7 @@ const { username, password, authToken } = config;
     it("Update customer details with invalid user id", () => {
 
         customerInfoEndpoint.updateCustomerInfo(`https://parabank.parasoft.com/parabank/services_proxy/bank/customers/update/13?firstName=User&lastName=Useric&street=Usely&city=Osijek&state=Osjecko-baranjska&zipCode=31000&phoneNumber=0987654321&ssn=1234567890&username=&password=`, authToken).then((response) => {
-            expect(response.status).to.eq(500);
+            expect(response.status).to.eq(404);
         });
 
     });

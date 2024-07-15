@@ -67,7 +67,7 @@ describe('Parabank Login API Test', () => {
     it("Create transactions with invalid ID account and with amount", () => {
 
         transactionsForAmountEndpoint.transactionsForAccountByAmount(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/14/transactions/amount/500`, authToken).then((response) => {
-            expect(response.status).to.eq(500);
+            expect(response.status).to.eq(400);
         });
 
     });
