@@ -1,19 +1,18 @@
-const loginEndpoint =  require('../pageObjects/login');
-const accountsEndpoint = require('../pageObjects/accountsOverview');
-const newAccountEndpoint = require('../pageObjects/newAccount');
+const getRequest =  require('../pageObjects/GETrequest');
+const postRequest =  require('../pageObjects/POSTrequest');
 const config = require('../config/config');
 
 describe('Parabank Login API Test', () => {
-    const { username, password, authToken } = config;
+    const { username, password } = config;
     let userID;
     let apiUrl1;
     let apiUrls;
     let accountID;
 
     before('Should successfully login with correct credentials', () => {
-        loginEndpoint.login(username, password).then((response) => {
+        postRequest.login(username, password).then((response) => {
             expect(response.status).to.eq(200);
-            const responseBody = loginEndpoint.parseXmlToJson(response.body);
+            const responseBody = postRequest.parseXmlToJson(response.body);
             expect(responseBody).to.have.property('customer');
             const customer = responseBody.customer;
             userID = customer.id._text.replace(/"/g, '');
@@ -23,7 +22,7 @@ describe('Parabank Login API Test', () => {
     });
 
     it("Get all bank accounts of the user by valid user ID", () => {
-        accountsEndpoint.accountsOverview(apiUrl1, authToken).then((response) => {
+        getRequest.getRequest(apiUrl1).then((response) => {
             expect(response.status).to.eq(200);
             const account = response.body[0]; 
             expect(account).to.have.property('id');
@@ -35,7 +34,7 @@ describe('Parabank Login API Test', () => {
 
     it("Creating new saving account using valid data", () => {
 
-        newAccountEndpoint.newAccountsOverview(apiUrls, authToken).then((response) => {
+        postRequest.postRequest(apiUrls).then((response) => {
             expect(response.status).to.eq(200);
             const newAccount = response.body; 
             expect(newAccount).to.have.property('id');
@@ -48,7 +47,7 @@ describe('Parabank Login API Test', () => {
 
     it("Creating new saving account using valid customerID, valid AccountType and invalid fromAccountId", () => {
 
-        newAccountEndpoint.newAccountsOverview(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=1&fromAccountId=15`, authToken).then((response) => {
+        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=1&fromAccountId=15`).then((response) => {
             expect(response.status).to.eq(500);
         });
 
@@ -56,7 +55,7 @@ describe('Parabank Login API Test', () => {
 
     it("Creating new saving account using valid customerID, valid AccountType and invalid fromAccountId", () => {
 
-        newAccountEndpoint.newAccountsOverview(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=-1&fromAccountId=15`, authToken).then((response) => {
+        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=-1&fromAccountId=15`).then((response) => {
             expect(response.status).to.eq(500);
         });
 

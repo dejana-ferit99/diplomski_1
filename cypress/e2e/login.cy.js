@@ -1,4 +1,4 @@
-const apiEndpoints = require('../pageObjects/login');
+const postRequest =  require('../pageObjects/POSTrequest');
 const config = require('../config/config');
 
 
@@ -7,10 +7,10 @@ describe('Parabank Login API Test', () => {
   const { username, password } = config;
 
   it('Should successfully login with correct credentials', { tags: ['@login'] }, () => {
-    apiEndpoints.login(username, password).then((response) => {
+    postRequest.login(username, password).then((response) => {
       expect(response.status).to.eq(200);
 
-      const responseBody = apiEndpoints.parseXmlToJson(response.body);
+      const responseBody = postRequest.parseXmlToJson(response.body);
 
       expect(responseBody).to.have.property('customer');
 
@@ -29,7 +29,7 @@ describe('Parabank Login API Test', () => {
   });
 
   it('Should fail login with incorrect password', () => {
-    apiEndpoints.login(username, '123456').then((response) => {
+    postRequest.login(username, '123456').then((response) => {
       expect(response.status).to.eq(400);
       const responseBody = response.body;
       expect(responseBody).to.equal('Invalid username and/or password');
@@ -37,7 +37,7 @@ describe('Parabank Login API Test', () => {
   });
 
   it('Should fail login with incorrect username', () => {
-    apiEndpoints.login('user1', password).then((response) => {
+    postRequest.login('user1', password).then((response) => {
       expect(response.status).to.eq(400);
       const responseBody = response.body;
       expect(responseBody).to.equal('Invalid username and/or password');
@@ -45,7 +45,7 @@ describe('Parabank Login API Test', () => {
   });
 
   it('Should fail login with incorrect credentials (incorrect password and username)', () => {
-    apiEndpoints.login('user1', '123456').then((response) => {
+    postRequest.login('user1', '123456').then((response) => {
       expect(response.status).to.eq(400);
       const responseBody = response.body;
       expect(responseBody).to.equal('Invalid username and/or password');

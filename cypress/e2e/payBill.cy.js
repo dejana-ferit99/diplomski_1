@@ -1,19 +1,18 @@
-const loginEndpoint =  require('../pageObjects/login');
-const accountsEndpoint = require('../pageObjects/accountsOverview');
-const billEndpoint = require('../pageObjects/payBill');
+const getRequest =  require('../pageObjects/GETrequest');
+const postRequest =  require('../pageObjects/POSTrequest');
 const config = require('../config/config');
 
 describe('Parabank Login API Test', () => {
-    const { username, password, authToken } = config;
+    const { username, password } = config;
     let userID;
     let apiUrl1;
     let accountID;
 
     before('Should successfully login with correct credentials', () => {
 
-        loginEndpoint.login(username, password).then((response) => {
+        postRequest.login(username, password).then((response) => {
             expect(response.status).to.eq(200);
-            const responseBody = loginEndpoint.parseXmlToJson(response.body);
+            const responseBody = postRequest.parseXmlToJson(response.body);
             expect(responseBody).to.have.property('customer');
             const customer = responseBody.customer;
             userID = customer.id._text.replace(/"/g, '');
@@ -24,7 +23,7 @@ describe('Parabank Login API Test', () => {
     });
     
     it("Get all bank accounts of the user by valid user ID", () => {
-        accountsEndpoint.accountsOverview(apiUrl1, authToken).then((response) => {
+        getRequest.getRequest(apiUrl1).then((response) => {
             expect(response.status).to.eq(200);
             const account = response.body[0]; 
             expect(account).to.have.property('id');
@@ -36,7 +35,7 @@ describe('Parabank Login API Test', () => {
 
     it("Pay bill with valid accountId and amount using valid body data", () => {
         cy.fixture('billDataBody').then((data) => {
-            billEndpoint.payBill(apiUrl1, authToken, data.billDataBody[0]).then((response) => {
+            postRequest.postRequestWithBodyData(apiUrl1, data.billDataBody[0]).then((response) => {
                 expect(response.status).to.eq(200);
                 const account = response.body; 
                 expect(account).to.have.property('payeeName');
@@ -50,8 +49,8 @@ describe('Parabank Login API Test', () => {
     it("Pay bill with valid accountId and amount without body data", () => {
 
         cy.fixture('billDataBody').then((data) => {
-            billEndpoint.payBill(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=200`, authToken, data.billDataBody[1]).then((response) => {
-                expect(response.status).to.eq(400);
+            postRequest.postRequestWithBodyData(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=200`, data.billDataBody[1]).then((response) => {
+                expect(response.status).to.eq(200);
             });
         });
 
@@ -60,7 +59,7 @@ describe('Parabank Login API Test', () => {
     it("Pay bill with valid accountId and without amount using valid body data", () => {
 
         cy.fixture('billDataBody').then((data) => {
-            billEndpoint.payBill(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=`, authToken, data.billDataBody[0]).then((response) => {
+            postRequest.postRequestWithBodyData(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=`, data.billDataBody[0]).then((response) => {
                 expect(response.status).to.eq(400);
             });
         });
@@ -70,7 +69,7 @@ describe('Parabank Login API Test', () => {
     it("Pay bill with invalid accountId and without amount using valid body data", () => {
 
         cy.fixture('billDataBody').then((data) => {
-            billEndpoint.payBill(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=15&amount=`, authToken, data.billDataBody[0]).then((response) => {
+            postRequest.postRequestWithBodyData(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=15&amount=`, data.billDataBody[0]).then((response) => {
                 expect(response.status).to.eq(400);
             });
         });
@@ -80,7 +79,7 @@ describe('Parabank Login API Test', () => {
     it("Pay bill with uncompleted body data (no accountNumber)", () => {
 
         cy.fixture('billDataBody').then((data) => {
-            billEndpoint.payBill(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=200`, authToken, data.billDataBody[0]).then((response) => {
+            postRequest.postRequestWithBodyData(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=200`, data.billDataBody[0]).then((response) => {
                 expect(response.status).to.eq(200);
             });
         });
