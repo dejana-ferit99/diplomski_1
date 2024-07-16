@@ -9,11 +9,8 @@ describe('Parabank Login API Test', () => {
   it('Should successfully login with correct credentials', { tags: ['@login'] }, () => {
     postRequest.login(username, password).then((response) => {
       expect(response.status).to.eq(200);
-
       const responseBody = postRequest.parseXmlToJson(response.body);
-
       expect(responseBody).to.have.property('customer');
-
       const customer = responseBody.customer;
       expect(customer).to.have.property('id');
       expect(customer).to.have.property('firstName');

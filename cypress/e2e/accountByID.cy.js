@@ -3,7 +3,7 @@ const postRequest =  require('../pageObjects/POSTrequest');
 const config = require('../config/config');
 
 
-describe('Parabank Login API Test', () => {
+describe('Parabank Account API Test', () => {
     const { username, password } = config;
     let userID;
     let apiUrl1;
