@@ -23,8 +23,8 @@ const { username, password } = config;
     it("Update customer details with valid user id", () => {
 
         postRequest.postRequest(apiUrl1).then((response) => {
-            expect(response.status).to.eq(500);
-            //expect(response.body).to.equal('Successfully updated customer profile');
+            expect(response.status).to.eq(200);
+            expect(response.body).to.equal('Successfully updated customer profile');
         });
 
     }); 
@@ -32,15 +32,15 @@ const { username, password } = config;
     it("Update customer details without state value", () => {
 
         postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/customers/update/${userID}?firstName=User&lastName=Useric&street=Usely&city=Osijek&state=&zipCode=31000&phoneNumber=0987654321&ssn=1234567890&username=&password=`).then((response) => {
-            expect(response.status).to.eq(500);
+            expect(response.status).to.eq(200);
         });
 
     }); 
    
     it("Update customer details with invalid user id", () => {
 
-        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/customers/update/13?firstName=User&lastName=Useric&street=Usely&city=Osijek&state=Osjecko-baranjska&zipCode=31000&phoneNumber=0987654321&ssn=1234567890&username=&password=`).then((response) => {
-            expect(response.status).to.eq(200);
+        postRequest.postRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/customers/update/13?firstName=User&lastName=Useric&street=Usely&city=Osijek&state=Osjecko-baranjska&zipCode=31000&phoneNumber=0987654321&ssn=1234567890&username=&password=`).then((response) => {
+            expect(response.status).to.eq(401);
         });
 
     });

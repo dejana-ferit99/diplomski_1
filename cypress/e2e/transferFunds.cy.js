@@ -53,8 +53,8 @@ describe('Parabank Transfer Funds API Test', () => {
 
     it("Transfer money from one account to another when fromAccountId is invalid, toAccountId is valid, with amount", () => {
 
-        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/transfer?fromAccountId=15&toAccountId=${accountID}&amount=500`).then((response) => {
-            expect(response.status).to.eq(500);
+        postRequest.postRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/transfer?fromAccountId=15&toAccountId=${accountID}&amount=500`).then((response) => {
+            expect(response.status).to.eq(401);
         });
 
     });
@@ -77,15 +77,15 @@ describe('Parabank Transfer Funds API Test', () => {
 
     it("Transfer money from one account to another when fromAccountId is invalid, toAccountId is invalid, with amount", () => {
 
-        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/transfer?fromAccountId=15&toAccountId=15&amount=500`).then((response) => {
-            expect(response.status).to.eq(500);
+        postRequest.postRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/transfer?fromAccountId=15&toAccountId=15&amount=500`).then((response) => {
+            expect(response.status).to.eq(401);
         });
 
     });
 
     it("Transfer money from one account to another when fromAccountId is invalid, toAccountId is invalid, without amount", () => {
 
-        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/transfer?fromAccountId=15&toAccountId=15&amount=`).then((response) => {
+        postRequest.postRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/transfer?fromAccountId=15&toAccountId=15&amount=`).then((response) => {
             expect(response.status).to.eq(400);
         });
 

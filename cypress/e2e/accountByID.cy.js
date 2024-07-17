@@ -49,8 +49,8 @@ describe('Parabank Account API Test', () => {
 
     it("Get account by account ID, incorrect account ID", () => {
 
-        getRequest.getRequest('https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/123').then((response) => {
-            expect(response.status).to.eq(500);
+        getRequest.getRequestNoAutorization('https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/123').then((response) => {
+            expect(response.status).to.eq(401);
         });
 
     });

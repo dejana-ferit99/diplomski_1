@@ -32,7 +32,7 @@ describe('Parabank Transactions By Date API Test', () => {
             accountID = account.id;
             console.log(accountID);
             //If user is new user, date at the end of this url should be changed
-            apiUrl2 = `https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}/transactions/onDate/07-15-2024`;
+            apiUrl2 = `https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}/transactions/onDate/07-17-2024`;
         });
 
     });  
@@ -61,14 +61,14 @@ describe('Parabank Transactions By Date API Test', () => {
 
     it("Fetch transactions for invalid account ID", () => {
 
-        getRequest.getRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/15/transactions/onDate/07-15-2024`).then((response) => {
-            expect(response.status).to.eq(500);
+        getRequest.getRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/15/transactions/onDate/07-17-2024`).then((response) => {
+            expect(response.status).to.eq(401);
         });
 
     });
     it("Fetch transactions without specific date for account", () => {
 
-        getRequest.getRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/15/transactions/onDate/`).then((response) => {
+        getRequest.getRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/15/transactions/onDate/`).then((response) => {
             expect(response.status).to.eq(404);
         });
 

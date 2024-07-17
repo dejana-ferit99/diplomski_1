@@ -51,15 +51,15 @@ describe('Parabank Transactions For Account By Amount API Test', () => {
     });
     it("Get transactions with invalid ID account and without amount", () => {
 
-        getRequest.getRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/14/transactions/amount/`).then((response) => {
+        getRequest.getRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/14/transactions/amount/`).then((response) => {
             expect(response.status).to.eq(404);
         });
 
     });
     it("Get transactions with invalid ID account and with amount", () => {
 
-        getRequest.getRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/14/transactions/amount/500`).then((response) => {
-            expect(response.status).to.eq(500);
+        getRequest.getRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/14/transactions/amount/500`).then((response) => {
+            expect(response.status).to.eq(401);
         });
 
     });

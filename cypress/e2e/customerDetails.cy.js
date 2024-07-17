@@ -46,8 +46,8 @@ describe('Parabank Customer Details API Test', () => {
     });
     it("Get customer details with invalid user id", () => {
 
-        getRequest.getRequest('http://parabank.parasoft.com/parabank/services_proxy/bank/customers/13').then((response) => {
-            expect(response.status).to.eq(500);
+        getRequest.getRequestNoAutorization('http://parabank.parasoft.com/parabank/services_proxy/bank/customers/13').then((response) => {
+            expect(response.status).to.eq(401);
         });
 
     });

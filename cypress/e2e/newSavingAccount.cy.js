@@ -53,7 +53,7 @@ describe('Parabank New Saving Account API Test', () => {
 
     });
 
-    it("Creating new saving account using valid customerID, valid AccountType and invalid fromAccountId", () => {
+    it("Creating new saving account using valid customerID, invalid AccountType and invalid fromAccountId", () => {
 
         postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=-1&fromAccountId=15`).then((response) => {
             expect(response.status).to.eq(500);

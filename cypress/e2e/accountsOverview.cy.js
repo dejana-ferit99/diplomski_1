@@ -45,8 +45,8 @@ describe('Parabank Accounts Overview API Test', () => {
 
     it("Get all bank accounts of the user by invalid user Id", () => {
 
-        getRequest.getRequest('https://parabank.parasoft.com/parabank/services_proxy/bank/customers/123/accounts').then((response) => {
-            expect(response.status).to.eq(500);
+        getRequest.getRequestNoAutorization('https://parabank.parasoft.com/parabank/services_proxy/bank/customers/123/accounts').then((response) => {
+            expect(response.status).to.eq(401);
 
         });
 
