@@ -11,7 +11,6 @@ describe('Parabank Loan Request API Test', () => {
     let accountID;
 
     before('Should successfully login with correct credentials', () => {
-        
         postRequest.login(username, password).then((response) => {
             expect(response.status).to.eq(200);
             const responseBody = postRequest.parseXmlToJson(response.body);
@@ -21,7 +20,6 @@ describe('Parabank Loan Request API Test', () => {
             console.log(userID);
             apiUrl1 = `https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}/accounts`;
         });
-
     });
     it("Get all bank accounts of the user by valid user ID", () => {
 

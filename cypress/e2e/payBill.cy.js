@@ -49,8 +49,8 @@ describe('Parabank Pay Bill API Test', () => {
     it("Pay bill with valid accountId and amount without body data", () => {
 
         cy.fixture('billDataBody').then((data) => {
-            postRequest.postRequestWithBodyData(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=200`, data.billDataBody[1]).then((response) => {
-                expect(response.status).to.eq(200);
+            postRequest.postRequestWithBodyData(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=200`).then((response) => {
+                expect(response.status).to.eq(400);
             });
         });
 

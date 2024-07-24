@@ -7,18 +7,16 @@ describe('Parabank Accounts Overview API Test', () => {
     let userID;
     let apiUrl1;
 
-  before('Should successfully login with correct credentials', () => {
-        
-    postRequest.login(username, password).then((response) => {
-        expect(response.status).to.eq(200);
-        const responseBody = postRequest.parseXmlToJson(response.body);
-        expect(responseBody).to.have.property('customer');
-        const customer = responseBody.customer;
-        userID = customer.id._text.replace(/"/g, '');
-        console.log(userID);
-        apiUrl1 = `https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}/accounts`;
-      });
-      
+    before('Should successfully login with correct credentials', () => {
+        postRequest.login(username, password).then((response) => {
+            expect(response.status).to.eq(200);
+            const responseBody = postRequest.parseXmlToJson(response.body);
+            expect(responseBody).to.have.property('customer');
+            const customer = responseBody.customer;
+            userID = customer.id._text.replace(/"/g, '');
+            console.log(userID);
+            apiUrl1 = `https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}/accounts`;
+        });
     });
     
     it("Get all bank accounts of the user by valid user ID",  { tags: ['@flow1'] }, () => {
@@ -31,7 +29,6 @@ describe('Parabank Accounts Overview API Test', () => {
             expect(account).to.have.property('type');
             expect(account).to.have.property('balance');
         });
-
     });
 
     it("Get all bank accounts of the user by valid user ID and without authorization", () => {

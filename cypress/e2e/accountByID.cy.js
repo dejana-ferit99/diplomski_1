@@ -10,17 +10,16 @@ describe('Parabank Account API Test', () => {
     let apiUrl2;
     let accountID;
 
-  before('Should successfully login with correct credentials', () => {
-
-    postRequest.login(username, password).then((response) => {
-        expect(response.status).to.eq(200);
-        const responseBody = postRequest.parseXmlToJson(response.body);
-        expect(responseBody).to.have.property('customer');
-        const customer = responseBody.customer;
-        userID = customer.id._text.replace(/"/g, '');
-        console.log(userID);
-        apiUrl1 = `https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}/accounts`;
-      });
+    before('Should successfully login with correct credentials', () => {
+        postRequest.login(username, password).then((response) => {
+            expect(response.status).to.eq(200);
+            const responseBody = postRequest.parseXmlToJson(response.body);
+            expect(responseBody).to.have.property('customer');
+            const customer = responseBody.customer;
+            userID = customer.id._text.replace(/"/g, '');
+            console.log(userID);
+            apiUrl1 = `https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}/accounts`;
+        });
 
     });
     

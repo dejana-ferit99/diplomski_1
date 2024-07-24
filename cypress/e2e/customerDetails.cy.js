@@ -8,7 +8,6 @@ describe('Parabank Customer Details API Test', () => {
     let apiUrl1;
   
     before('Should successfully login with correct credentials', () => {
-
         postRequest.login(username, password).then((response) => {
             expect(response.status).to.eq(200);
             const responseBody = postRequest.parseXmlToJson(response.body);
@@ -17,8 +16,7 @@ describe('Parabank Customer Details API Test', () => {
             userID = customer.id._text.replace(/"/g, '');
             console.log(userID);
             apiUrl1 = `http://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}`;
-          });
-          
+        });   
     });
     it("Get customer details with valid user id", { tags: ['@flow1'] }, () => {
 
