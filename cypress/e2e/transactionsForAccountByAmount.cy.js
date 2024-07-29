@@ -9,7 +9,7 @@ describe('Parabank Transactions For Account By Amount API Test', () => {
     let apiUrl2;
     let accountID;
 
-    before('Should successfully login with correct credentials', () => {
+    before('Login with correct credentials', () => {
 
         postRequest.login(username, password).then((response) => {
             expect(response.status).to.eq(200);

@@ -10,7 +10,7 @@ describe('Parabank Transfer Funds API Test', () => {
     let apiUrl2;
     let accountID;
 
-    before('Should successfully login with correct credentials', () => {
+    before('Login with correct credentials', () => {
 
         postRequest.login(username, password).then((response) => {
             expect(response.status).to.eq(200);
@@ -62,7 +62,7 @@ describe('Parabank Transfer Funds API Test', () => {
     it("Transfer money from one account to another when fromAccountId is valid, toAccountId is invalid, with amount", () => {
 
         postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/transfer?fromAccountId=${accountID}&toAccountId=15&amount=500`).then((response) => {
-            expect(response.status).to.eq(500);
+            expect(response.status).to.eq(400);
         });
 
     });

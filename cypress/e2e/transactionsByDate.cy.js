@@ -9,7 +9,7 @@ describe('Parabank Transactions By Date API Test', () => {
     let apiUrl2;
     let accountID;
 
-    before('Should successfully login with correct credentials', () => {
+    before('Login with correct credentials', () => {
 
         postRequest.login(username, password).then((response) => {
             expect(response.status).to.eq(200);
@@ -37,7 +37,7 @@ describe('Parabank Transactions By Date API Test', () => {
 
     });  
 
-    it("Fetch transactions for specific date for account", () => {
+    it("Get transactions for specific date for account", () => {
 
         getRequest.getRequest(apiUrl2).then((response) => {
             expect(response.status).to.eq(200);
@@ -51,7 +51,7 @@ describe('Parabank Transactions By Date API Test', () => {
 
     });
 
-    it("Fetch transactions for specific date (transactions for this date does not exist) for account", () => {
+    it("Get transactions for specific date (transactions for this date does not exist) for account", () => {
 
         getRequest.getRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}/transactions/onDate/3-23-2024`).then((response) => {
             expect(response.status).to.eq(200);
@@ -59,14 +59,14 @@ describe('Parabank Transactions By Date API Test', () => {
 
     });
 
-    it("Fetch transactions for invalid account ID", () => {
+    it("Get transactions for invalid account ID", () => {
 
         getRequest.getRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/15/transactions/onDate/07-20-2024`).then((response) => {
             expect(response.status).to.eq(401);
         });
 
     });
-    it("Fetch transactions without specific date for account", () => {
+    it("Get transactions without specific date for account", () => {
 
         getRequest.getRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/15/transactions/onDate/`).then((response) => {
             expect(response.status).to.eq(404);

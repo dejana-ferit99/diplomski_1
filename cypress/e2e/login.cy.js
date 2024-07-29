@@ -6,7 +6,7 @@ describe('Parabank Login API Test', () => {
 
   const { username, password } = config;
 
-  it('Should successfully login with correct credentials', { tags: ['@login'] }, () => {
+  it('Login with correct credentials', { tags: ['@login'] }, () => {
     postRequest.login(username, password).then((response) => {
       expect(response.status).to.eq(200);
       const responseBody = postRequest.parseXmlToJson(response.body);

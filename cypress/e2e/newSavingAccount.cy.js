@@ -9,7 +9,7 @@ describe('Parabank New Saving Account API Test', () => {
     let apiUrls;
     let accountID;
 
-    before('Should successfully login with correct credentials', () => {
+    before('Login with correct credentials', () => {
         postRequest.login(username, password).then((response) => {
             expect(response.status).to.eq(200);
             const responseBody = postRequest.parseXmlToJson(response.body);
