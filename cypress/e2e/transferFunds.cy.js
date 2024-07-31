@@ -20,7 +20,6 @@ describe('Parabank Transfer Funds API Test', () => {
             expect(responseBody).to.have.property('customer');
             const customer = responseBody.customer;
             userID = customer.id._text.replace(/"/g, '');
-            console.log(userID);
             apiUrl1 = `https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}/accounts`;
           });
           
@@ -31,7 +30,6 @@ describe('Parabank Transfer Funds API Test', () => {
             const account = response.body[0]; 
             expect(account).to.have.property('id');
             accountID = account.id;
-            console.log(accountID);
             apiUrl2 = `https://parabank.parasoft.com/parabank/services_proxy/bank/transfer?fromAccountId=${accountID}&toAccountId=${accountID}&amount=500`;
         });
     });

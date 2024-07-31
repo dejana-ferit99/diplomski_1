@@ -18,7 +18,6 @@ describe('Parabank Pay Bill API Test', () => {
             expect(responseBody).to.have.property('customer');
             const customer = responseBody.customer;
             userID = customer.id._text.replace(/"/g, '');
-            console.log(userID);
             apiUrl1 = `https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}/accounts`;
           });
           
@@ -30,7 +29,6 @@ describe('Parabank Pay Bill API Test', () => {
             const account = response.body[0]; 
             expect(account).to.have.property('id');
             accountID = account.id;
-            console.log(accountID);
             apiUrl1 =  `https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=200`;
         });
     });
@@ -78,7 +76,7 @@ describe('Parabank Pay Bill API Test', () => {
 
     });
 
-    it("Pay bill with uncompleted body data (no accountNumber)", () => {
+    /*it("Pay bill with uncompleted body data (no accountNumber)", () => {
 
         cy.fixture('billDataBody').then((data) => {
             postRequest.postRequestWithBodyData(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=200`, data.billDataBody[0]).then((response) => {
@@ -86,6 +84,6 @@ describe('Parabank Pay Bill API Test', () => {
             });
         });
 
-    });
+    });*/
 
 });

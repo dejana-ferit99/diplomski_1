@@ -18,7 +18,6 @@ describe('Parabank New Saving Account API Test', () => {
             expect(responseBody).to.have.property('customer');
             const customer = responseBody.customer;
             userID = customer.id._text.replace(/"/g, '');
-            console.log(userID);
             apiUrl1 = `https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}/accounts`;
           });
     });

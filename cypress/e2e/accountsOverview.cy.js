@@ -16,7 +16,6 @@ describe('Parabank Accounts Overview API Test', () => {
             expect(responseBody).to.have.property('customer');
             const customer = responseBody.customer;
             userID = customer.id._text.replace(/"/g, '');
-            console.log(userID);
             apiUrl1 = `https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}/accounts`;
         });
     });
@@ -44,7 +43,7 @@ describe('Parabank Accounts Overview API Test', () => {
 
     it("Get all bank accounts of the user by invalid user Id", () => {
 
-        getRequest.getRequest('https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${invalidID}/accounts').then((response) => {
+        getRequest.getRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${invalidID}/accounts`).then((response) => {
             expect(response.status).to.eq(400);
 
         });
@@ -53,7 +52,7 @@ describe('Parabank Accounts Overview API Test', () => {
 
     it("Get all bank accounts without user Id", () => {
 
-        getRequest.getRequest('https://parabank.parasoft.com/parabank/services_proxy/bank/customers/accounts').then((response) => {
+        getRequest.getRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/customers/accounts`).then((response) => {
             expect(response.status).to.eq(400);
 
         });

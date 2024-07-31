@@ -21,7 +21,6 @@ describe('Parabank Transactions By Date API Test', () => {
             expect(responseBody).to.have.property('customer');
             const customer = responseBody.customer;
             userID = customer.id._text.replace(/"/g, '');
-            console.log(userID);
             apiUrl1 = `https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}/accounts`;
         });
 
@@ -33,10 +32,8 @@ describe('Parabank Transactions By Date API Test', () => {
             expect(response.status).to.eq(200);
             const account = response.body[0]; 
             expect(account).to.have.property('id');
-            accountID = account.id;
-            console.log(accountID);          
+            accountID = account.id;         
             apiUrl2 = `https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}/transactions/onDate/${todayDateString}`;
-            console.log(apiUrl2);
         });
     });  
 

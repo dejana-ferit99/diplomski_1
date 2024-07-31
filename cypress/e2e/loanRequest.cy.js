@@ -17,7 +17,6 @@ describe('Parabank Loan Request API Test', () => {
             expect(responseBody).to.have.property('customer');
             const customer = responseBody.customer;
             userID = customer.id._text.replace(/"/g, '');
-            console.log(userID);
             apiUrl1 = `https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}/accounts`;
         });
     });
@@ -28,7 +27,6 @@ describe('Parabank Loan Request API Test', () => {
             const account = response.body[0]; 
             expect(account).to.have.property('id');
             accountID = account.id;
-            console.log(accountID);
             apiUrls = `https://parabank.parasoft.com/parabank/services_proxy/bank/requestLoan?customerId=${userID}&amount=100&downPayment=10&fromAccountId=${accountID}`;
             apiUrli = `https://parabank.parasoft.com/parabank/services_proxy/bank/requestLoan?customerId=${userID}&amount=10000&downPayment=100&fromAccountId=${accountID}`;
         });

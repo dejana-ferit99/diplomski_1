@@ -10,7 +10,7 @@ describe('Parabank Account API Test', () => {
     let apiUrl1;
     let apiUrl2;
     let accountID;
-    const invalidID = apiNonStatic.generateRandomString(10); 
+    const invalidID = apiNonStatic.generateRandomString(10);
 
     before('Login with correct credentials', () => {
         postRequest.login(username, password).then((response) => {
@@ -31,9 +31,7 @@ describe('Parabank Account API Test', () => {
             const account = response.body[0]; 
             expect(account).to.have.property('id');
             accountID = account.id;
-            //console.log(accountID);
             apiUrl2 = `https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}`;
-            //console.log(apiUrl2);
           });
     });
 
@@ -50,7 +48,7 @@ describe('Parabank Account API Test', () => {
 
     it("Get account by account ID, incorrect account ID", () => {
 
-        getRequest.getRequest('https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${invalidID}').then((response) => {
+        getRequest.getRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${invalidID}`).then((response) => {
             expect(response.status).to.eq(400);
         });
 
@@ -58,7 +56,7 @@ describe('Parabank Account API Test', () => {
 
     it("Get account by account ID, without account ID", () => {
 
-        getRequest.getRequest('https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/').then((response) => {
+        getRequest.getRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/`).then((response) => {
             expect(response.status).to.eq(404);
         });
 

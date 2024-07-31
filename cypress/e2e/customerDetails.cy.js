@@ -16,7 +16,6 @@ describe('Parabank Customer Details API Test', () => {
             expect(responseBody).to.have.property('customer');
             const customer = responseBody.customer;
             userID = customer.id._text.replace(/"/g, '');
-            console.log(userID);
             apiUrl1 = `http://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}`;
         });   
     });
@@ -39,14 +38,14 @@ describe('Parabank Customer Details API Test', () => {
     }); 
     it("Get customer details without user id", () => {
 
-        getRequest.getRequest('http://parabank.parasoft.com/parabank/services_proxy/bank/customers/').then((response) => {
+        getRequest.getRequest(`http://parabank.parasoft.com/parabank/services_proxy/bank/customers/`).then((response) => {
             expect(response.status).to.eq(404);
         });
 
     });
     it("Get customer details with invalid user id", () => {
 
-        getRequest.getRequest('http://parabank.parasoft.com/parabank/services_proxy/bank/customers/${invalidID}').then((response) => {
+        getRequest.getRequest(`http://parabank.parasoft.com/parabank/services_proxy/bank/customers/${invalidID}`).then((response) => {
             expect(response.status).to.eq(400);
         });
 
