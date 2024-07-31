@@ -1,5 +1,6 @@
 const getRequest =  require('../pageObjects/GETrequest');
 const postRequest =  require('../pageObjects/POSTrequest');
+const apiNonStatic = require('../pageObjects/ApiNonStatic');
 const config = require('../config/config');
 
 describe('Parabank Transactions For Account By Amount API Test', () => {
@@ -8,6 +9,7 @@ describe('Parabank Transactions For Account By Amount API Test', () => {
     let apiUrl1;
     let apiUrl2;
     let accountID;
+    const invalidID = apiNonStatic.generateRandomString(10); 
 
     before('Login with correct credentials', () => {
 
@@ -51,15 +53,15 @@ describe('Parabank Transactions For Account By Amount API Test', () => {
     });
     it("Get transactions with invalid ID account and without amount", () => {
 
-        getRequest.getRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/14/transactions/amount/`).then((response) => {
+        getRequest.getRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${invalidID}/transactions/amount/`).then((response) => {
             expect(response.status).to.eq(404);
         });
 
     });
     it("Get transactions with invalid ID account and with amount", () => {
 
-        getRequest.getRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/14/transactions/amount/500`).then((response) => {
-            expect(response.status).to.eq(401);
+        getRequest.getRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${invalidID}/transactions/amount/500`).then((response) => {
+            expect(response.status).to.eq(400);
         });
 
     });

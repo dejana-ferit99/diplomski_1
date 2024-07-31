@@ -1,5 +1,6 @@
 const getRequest =  require('../pageObjects/GETrequest');
 const postRequest =  require('../pageObjects/POSTrequest');
+const apiNonStatic = require('../pageObjects/ApiNonStatic');
 const config = require('../config/config');
 
 
@@ -9,6 +10,7 @@ describe('Parabank Account API Test', () => {
     let apiUrl1;
     let apiUrl2;
     let accountID;
+    const invalidID = apiNonStatic.generateRandomString(10); 
 
     before('Login with correct credentials', () => {
         postRequest.login(username, password).then((response) => {
@@ -48,8 +50,8 @@ describe('Parabank Account API Test', () => {
 
     it("Get account by account ID, incorrect account ID", () => {
 
-        getRequest.getRequestNoAutorization('https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/123').then((response) => {
-            expect(response.status).to.eq(401);
+        getRequest.getRequest('https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${invalidID}').then((response) => {
+            expect(response.status).to.eq(400);
         });
 
     });

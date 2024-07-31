@@ -1,5 +1,6 @@
 const getRequest =  require('../pageObjects/GETrequest');
 const postRequest =  require('../pageObjects/POSTrequest');
+const apiNonStatic = require('../pageObjects/ApiNonStatic');
 const config = require('../config/config');
 
 describe('Parabank New Checking Account API Test', () => {
@@ -8,6 +9,7 @@ describe('Parabank New Checking Account API Test', () => {
     let apiUrl1;
     let apiUrlc;
     let accountID;
+    const invalidID = apiNonStatic.generateRandomString(10); 
 
     before('Login with correct credentials', () => {
 
@@ -17,7 +19,6 @@ describe('Parabank New Checking Account API Test', () => {
             expect(responseBody).to.have.property('customer');
             const customer = responseBody.customer;
             userID = customer.id._text.replace(/"/g, '');
-            console.log(userID);
             apiUrl1 = `https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${userID}/accounts`;
         });
 
@@ -30,7 +31,6 @@ describe('Parabank New Checking Account API Test', () => {
             const account = response.body[0]; 
             expect(account).to.have.property('id');
             accountID = account.id;
-            console.log(accountID);
             apiUrlc = `https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=0&fromAccountId=${accountID}`;
         });
     }); 
@@ -53,26 +53,27 @@ describe('Parabank New Checking Account API Test', () => {
         postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=-1&fromAccountId=${accountID}`).then((response) => {
             expect(response.status).to.eq(500);
         });
+        //check this
 
     }); 
     it("Creating new checking account using valid customerId, invalid AccountType and invalid fromAccountID", () => {
 
-        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=-1&fromAccountId=15`).then((response) => {
-            expect(response.status).to.eq(500);
+        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=-1&fromAccountId=${invalidID}`).then((response) => {
+            expect(response.status).to.eq(400);
         });
 
     });
     it("Creating new checking account using invalid customerId, invalid AccountType and valid fromAccountID", () => {
 
-        postRequest.postRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=13&newAccountType=-1&fromAccountId=${accountID}`).then((response) => {
-            expect(response.status).to.eq(401);
+        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${invalidID}&newAccountType=-1&fromAccountId=${accountID}`).then((response) => {
+            expect(response.status).to.eq(400);
         });
 
     }); 
     it("Creating new checking account using invalid customerId, valid AccountType and invalid fromAccountID", () => {
 
-        postRequest.postRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=13&newAccountType=0&fromAccountId=15`).then((response) => {
-            expect(response.status).to.eq(401);
+        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${invalidID}&newAccountType=0&fromAccountId=${invalidID}`).then((response) => {
+            expect(response.status).to.eq(400);
         });
 
     }); 

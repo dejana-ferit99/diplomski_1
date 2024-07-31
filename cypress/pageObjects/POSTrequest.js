@@ -57,18 +57,6 @@ class PostRequest {
           }
       })
     }
-
-    postRequestWithBodyDataNoAutorization(apiUrl, billDataBody) {
-      return cy.request({
-          method: 'POST',
-          url: apiUrl,
-          failOnStatusCode: false,
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: billDataBody
-      })
-    }
   
   }
   

@@ -1,5 +1,6 @@
 const getRequest =  require('../pageObjects/GETrequest');
 const postRequest =  require('../pageObjects/POSTrequest');
+const apiNonStatic = require('../pageObjects/ApiNonStatic');
 const config = require('../config/config');
 
 describe('Parabank New Saving Account API Test', () => {
@@ -8,6 +9,7 @@ describe('Parabank New Saving Account API Test', () => {
     let apiUrl1;
     let apiUrls;
     let accountID;
+    const invalidID = apiNonStatic.generateRandomString(10); 
 
     before('Login with correct credentials', () => {
         postRequest.login(username, password).then((response) => {
@@ -47,16 +49,16 @@ describe('Parabank New Saving Account API Test', () => {
 
     it("Creating new saving account using valid customerID, valid AccountType and invalid fromAccountId", () => {
 
-        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=1&fromAccountId=15`).then((response) => {
-            expect(response.status).to.eq(500);
+        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=1&fromAccountId=${invalidID}`).then((response) => {
+            expect(response.status).to.eq(400);
         });
 
     });
 
     it("Creating new saving account using valid customerID, invalid AccountType and invalid fromAccountId", () => {
 
-        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=-1&fromAccountId=15`).then((response) => {
-            expect(response.status).to.eq(500);
+        postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=-1&fromAccountId=${invalidID}`).then((response) => {
+            expect(response.status).to.eq(400);
         });
 
     }); 

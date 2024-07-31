@@ -1,5 +1,6 @@
 const getRequest =  require('../pageObjects/GETrequest');
 const postRequest =  require('../pageObjects/POSTrequest');
+const apiNonStatic = require('../pageObjects/ApiNonStatic');
 const config = require('../config/config');
 
 describe('Parabank Transactions By Date API Test', () => {
@@ -8,6 +9,9 @@ describe('Parabank Transactions By Date API Test', () => {
     let apiUrl1;
     let apiUrl2;
     let accountID;
+    const todayDate = apiNonStatic.formatDate();
+    const todayDateString = String(todayDate);
+    const invalidID = apiNonStatic.generateRandomString(10); 
 
     before('Login with correct credentials', () => {
 
@@ -30,11 +34,10 @@ describe('Parabank Transactions By Date API Test', () => {
             const account = response.body[0]; 
             expect(account).to.have.property('id');
             accountID = account.id;
-            console.log(accountID);
-            //If user is new user, date at the end of this url should be changed
-            apiUrl2 = `https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}/transactions/onDate/07-20-2024`;
+            console.log(accountID);          
+            apiUrl2 = `https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}/transactions/onDate/${todayDateString}`;
+            console.log(apiUrl2);
         });
-
     });  
 
     it("Get transactions for specific date for account", () => {
@@ -59,17 +62,18 @@ describe('Parabank Transactions By Date API Test', () => {
 
     });
 
-    it("Get transactions for invalid account ID", () => {
+    it("Get transactions without specific date for account", () => {
 
-        getRequest.getRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/15/transactions/onDate/07-20-2024`).then((response) => {
-            expect(response.status).to.eq(401);
+        getRequest.getRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${accountID}/transactions/onDate/`).then((response) => {
+            expect(response.status).to.eq(404);
         });
 
     });
-    it("Get transactions without specific date for account", () => {
 
-        getRequest.getRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/15/transactions/onDate/`).then((response) => {
-            expect(response.status).to.eq(404);
+    it("Get transactions for invalid account ID", () => {
+
+        getRequest.getRequestNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/accounts/${invalidID}/transactions/onDate/${todayDateString}`).then((response) => {
+            expect(response.status).to.eq(400);
         });
 
     });

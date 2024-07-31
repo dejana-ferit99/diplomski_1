@@ -1,11 +1,13 @@
 const getRequest =  require('../pageObjects/GETrequest');
 const postRequest =  require('../pageObjects/POSTrequest');
+const apiNonStatic = require('../pageObjects/ApiNonStatic');
 const config = require('../config/config');
 
 describe('Parabank Accounts Overview API Test', () => {
     const { username, password } = config;
     let userID;
     let apiUrl1;
+    const invalidID = apiNonStatic.generateRandomString(10); 
 
     before('Login with correct credentials', () => {
         postRequest.login(username, password).then((response) => {
@@ -42,8 +44,8 @@ describe('Parabank Accounts Overview API Test', () => {
 
     it("Get all bank accounts of the user by invalid user Id", () => {
 
-        getRequest.getRequestNoAutorization('https://parabank.parasoft.com/parabank/services_proxy/bank/customers/123/accounts').then((response) => {
-            expect(response.status).to.eq(401);
+        getRequest.getRequest('https://parabank.parasoft.com/parabank/services_proxy/bank/customers/${invalidID}/accounts').then((response) => {
+            expect(response.status).to.eq(400);
 
         });
 

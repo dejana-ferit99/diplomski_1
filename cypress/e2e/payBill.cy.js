@@ -1,5 +1,6 @@
 const getRequest =  require('../pageObjects/GETrequest');
 const postRequest =  require('../pageObjects/POSTrequest');
+const apiNonStatic = require('../pageObjects/ApiNonStatic');
 const config = require('../config/config');
 
 describe('Parabank Pay Bill API Test', () => {
@@ -7,6 +8,7 @@ describe('Parabank Pay Bill API Test', () => {
     let userID;
     let apiUrl1;
     let accountID;
+    const invalidID = apiNonStatic.generateRandomString(10); 
 
     before('Should successfully login with correct credentials', () => {
 
@@ -69,7 +71,7 @@ describe('Parabank Pay Bill API Test', () => {
     it("Pay bill with invalid accountId and without amount using valid body data", () => {
 
         cy.fixture('billDataBody').then((data) => {
-            postRequest.postRequestWithBodyDataNoAutorization(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=15&amount=`, data.billDataBody[0]).then((response) => {
+            postRequest.postRequestWithBodyData(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${invalidID}&amount=`, data.billDataBody[0]).then((response) => {
                 expect(response.status).to.eq(400);
             });
         });
