@@ -34,6 +34,7 @@ describe('Parabank Pay Bill API Test', () => {
     });
 
     it("Pay bill with valid accountId and amount using valid body data", () => {
+        //405 check
         cy.fixture('billDataBody').then((data) => {
             postRequest.postRequestWithBodyData(apiUrl1, data.billDataBody[0]).then((response) => {
                 expect(response.status).to.eq(200);
@@ -47,8 +48,8 @@ describe('Parabank Pay Bill API Test', () => {
     });
 
     it("Pay bill with valid accountId and amount without body data", () => {
-
-        cy.fixture('billDataBody').then((data) => {
+//check i data argument can be deleted
+        cy.fixture('billDataBody').then(() => {
             postRequest.postRequestWithBodyData(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=200`).then((response) => {
                 expect(response.status).to.eq(400);
             });
@@ -76,7 +77,7 @@ describe('Parabank Pay Bill API Test', () => {
 
     });
 
-    /*it("Pay bill with uncompleted body data (no accountNumber)", () => {
+    it("Pay bill with uncompleted body data (no accountNumber)", () => {
 
         cy.fixture('billDataBody').then((data) => {
             postRequest.postRequestWithBodyData(`https://parabank.parasoft.com/parabank/services_proxy/bank/billpay?accountId=${accountID}&amount=200`, data.billDataBody[0]).then((response) => {
@@ -84,6 +85,6 @@ describe('Parabank Pay Bill API Test', () => {
             });
         });
 
-    });*/
+    });
 
 });

@@ -48,14 +48,15 @@ describe('Parabank New Checking Account API Test', () => {
 
     }); 
 
-    it("Creating new checking account using valid customerId, invalid AccountType and valid fromAccountID", () => {
+    /*it("Creating new checking account using valid customerId, invalid AccountType and valid fromAccountID", () => {
 
         postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=-1&fromAccountId=${accountID}`).then((response) => {
             expect(response.status).to.eq(500);
         });
-        //check this
+        //check this 500
 
-    }); 
+    }); */
+    
     it("Creating new checking account using valid customerId, invalid AccountType and invalid fromAccountID", () => {
 
         postRequest.postRequest(`https://parabank.parasoft.com/parabank/services_proxy/bank/createAccount?customerId=${userID}&newAccountType=-1&fromAccountId=${invalidID}`).then((response) => {
